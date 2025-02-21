@@ -75,7 +75,7 @@ switch (opcaoEscolhidaNumerica)
 void RegistrarBanda()
 {
     Console.Clear();
-    Console.WriteLine("Registro de Bandas");
+    ExibirTituloDaOpcao("Registro das Bandas");
     Console.Write("Digite o nome da banda que deseja registrar: ");
     string nomeDaBanda = Console.ReadLine()!;
     listasDasBandas.Add(nomeDaBanda);
@@ -89,7 +89,7 @@ void RegistrarBanda()
 void MostrarBandasRegistradas()
 {
     Console.Clear();
-    Console.WriteLine("Exibindo todas as bandas registradas\n");
+    ExibirTituloDaOpcao("Exibindo todas as bandas registradas");
     /*for (int i = 0; i < listasDasBandas.Count; i++)
     {
         Console.WriteLine($"Banda: {listasDasBandas[i]}");
@@ -104,6 +104,14 @@ void MostrarBandasRegistradas()
     Console.ReadKey();
     Console.Clear();
     ExibirOpcoesDoMenu();
+}
+void ExibirTituloDaOpcao(string titulo)
+{
+    int quantidadeDeLetras = titulo.Length;
+    string asteristicos =string.Empty.PadLeft(quantidadeDeLetras, '*');
+    Console.WriteLine(asteristicos);
+    Console.WriteLine(titulo);
+    Console.WriteLine(asteristicos + "\n" );
 }
 
 ExibirOpcoesDoMenu();
