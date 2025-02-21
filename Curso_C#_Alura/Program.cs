@@ -4,7 +4,12 @@ string mensagemDeBoasVindas = "Boas Vindas ao Screen Sound";
 /*List<string> listasDasBandas = new List<string>();  //cria uma lista de string vazia para armazenar algo que o usuario digitar*/
 
 //ou a lista ja pode ser pré criada
-List<string> listasDasBandas = new List<string> { "U2", "The Beatle", "Nirvana","Calipso"};
+//List<string> listasDasBandas = new List<string> { "U2", "The Beatle", "Nirvana","Calipso"};
+
+// ou ,melhor, nesse caso podemos criar um dicionário, que é uma estrutura que tem chave(nome da banda) e valor(nota) 
+Dictionary<string, List<int>> bandasRegistradas = new Dictionary<string, List<int>>();
+bandasRegistradas.Add("U2", new List<int> { 5, 10, 2, 9 });
+bandasRegistradas.Add("The Beatle", new List<int> ());
 
 //Funções
 //void é uma função sem retorno, usa a convenção de PascalCase
@@ -60,9 +65,9 @@ switch (opcaoEscolhidaNumerica)
             break; 
         case 2: MostrarBandasRegistradas();
             break;
-        case 3: Console.WriteLine("Você escolheu a opção" + opcaoEscolhidaNumerica);
+        case 3: AvaliarUmaBanda();
             break;
-        case 4: Console.WriteLine("Você escolheu a opção" + opcaoEscolhidaNumerica);
+        case 4:MediaDaBanda();  
             break;
         case -1: Console.WriteLine("Bye,Bye:)");    
             break;
@@ -78,7 +83,7 @@ void RegistrarBanda()
     ExibirTituloDaOpcao("Registro das Bandas");
     Console.Write("Digite o nome da banda que deseja registrar: ");
     string nomeDaBanda = Console.ReadLine()!;
-    listasDasBandas.Add(nomeDaBanda);
+    bandasRegistradas.Add(nomeDaBanda, new List<int>());
     Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso");//interpolação de string (coloca coisas no meio da string)
     Thread.Sleep(2000);//espera aberto a aplicação em milisegundos depois fecha
     Console.Clear();//limpa o console
@@ -96,7 +101,7 @@ void MostrarBandasRegistradas()
     }*/
 
     //ou faça assim:
-    foreach(string banda in listasDasBandas)
+    foreach(string banda in bandasRegistradas.Keys)
     {
         Console.WriteLine($"Banda: {banda}");
     }
@@ -112,6 +117,66 @@ void ExibirTituloDaOpcao(string titulo)
     Console.WriteLine(asteristicos);
     Console.WriteLine(titulo);
     Console.WriteLine(asteristicos + "\n" );
+}
+
+void AvaliarUmaBanda()
+{
+    Console.Clear();
+    ExibirTituloDaOpcao("Avaliando uma banda");
+    Console.Write("Digite o nome da banda que deseja avaliar: ");
+    string nomeDaBanda = Console.ReadLine()!;
+    if (bandasRegistradas.ContainsKey(nomeDaBanda))
+    {
+        Console.Write($"Digite a nota que a banda {nomeDaBanda} merece! ");
+        int nota = int.Parse(Console.ReadLine()!);
+        bandasRegistradas[nomeDaBanda].Add(nota);
+        Console.WriteLine($"A banda {nomeDaBanda} foi avaliada com sucesso");
+        Thread.Sleep(4000);
+        Console.Clear() ;
+        ExibirOpcoesDoMenu();
+    }
+    else
+    {
+        Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada");
+        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
+        Console.ReadKey();
+        Console.Clear();
+        ExibirOpcoesDoMenu();
+    }
+    
+    ExibirOpcoesDoMenu();
+}
+void MediaDaBanda()
+{
+    Console.Clear();
+    ExibirTituloDaOpcao("Calculando a média de uma banda");
+    Console.Write("Digite o nome da banda que deseja calcular a média: ");
+    string nomeDaBanda = Console.ReadLine()!;
+    if (bandasRegistradas.ContainsKey(nomeDaBanda))
+    {
+        List<int> notas = bandasRegistradas[nomeDaBanda];
+        Console.WriteLine($"\nA média das notas da banda {nomeDaBanda} é: {notas.Average()}");//Average() é um método que calcula a média,mais fácil
+        //ou pode fazer assim:(mais complexo)
+        /*double somaDasNotas = 0;
+        foreach (int nota in notas)
+        {
+            somaDasNotas += nota;
+        }
+        double media = somaDasNotas / notas.Count;
+        Console.WriteLine($"A média da banda {nomeDaBanda} é {media}");*/
+        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
+        Console.ReadKey();
+        Console.Clear();
+        ExibirOpcoesDoMenu();
+    }
+    else
+    {
+        Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada");
+        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
+        Console.ReadKey();
+        Console.Clear();
+        ExibirOpcoesDoMenu();
+    }
 }
 
 ExibirOpcoesDoMenu();
